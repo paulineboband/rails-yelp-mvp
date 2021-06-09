@@ -1,0 +1,18 @@
+<h2><%= @restaurant.name %></h2>
+<p><%= @restaurant.address %></p>
+<p><%= @restaurant.category %></p>
+
+<%= link_to 'Back', restaurants_path %>
+<%= link_to 'Leave a review', new_restaurant_review_path(@restaurant) %>
+
+<ul class="list-group">
+  <% @restaurant.reviews.each do |review| %>
+    <li class="list-group-item"><%= review.content %> - <%= review.rating  %>/5</li>
+  <% end %>
+</ul>
+
+<%= simple_form_for [ @restaurant, @review ] do |f| %>
+  <%= f.input :content %>
+  <%= f.collection_radio_buttons :rating, [[1, "Really bad"], [2, "Bad"], [3, "neutre"], [4, "good"], [5, "very good"]], :first, :last %>
+  <%= f.submit "Submit review", class: "btn btn-primary" %>
+<% end %>
